@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:quizz_application/Dummydb.dart';
 import 'package:quizz_application/utils/colorconstants.dart';
+import 'package:quizz_application/view/result_screen/result_screen.dart';
 
 class QuestionsScreen extends StatefulWidget {
   const QuestionsScreen({super.key});
@@ -30,22 +31,25 @@ class _QuestionsScreenState extends State<QuestionsScreen> {
           ],
         ),
         body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 25),
           child: Column(
             children: [
               Expanded(
                 child: Container(
                   decoration: BoxDecoration(
                     color: Colorconstants.Questionsbgcolor,
-                    borderRadius: BorderRadius.circular(12),
+                    borderRadius: BorderRadius.circular(15),
                   ),
                   child: Center(
-                    child: Text(
-                      Dummydb.Questionslist[Questionindex]["Question"],
-                      style: TextStyle(
-                          color: Colorconstants.textColor,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 18),
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 20),
+                      child: Text(
+                        Dummydb.Questionslist[Questionindex]["Question"],
+                        style: TextStyle(
+                            color: Colorconstants.textColor,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18),
+                      ),
                     ),
                   ),
                 ),
@@ -90,14 +94,18 @@ class _QuestionsScreenState extends State<QuestionsScreen> {
               InkWell(
                 onTap: () {
                   Questionindex = Questionindex + 1;
-                  if (Questionindex > 5) {
-                    Questionindex = 0;
+                  if (Questionindex > Dummydb.Questionslist.length - 1) {
+                    Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => ResultScreen(),
+                        ));
                   }
 
                   setState(() {});
                 },
                 child: Container(
-                  padding: EdgeInsets.symmetric(horizontal: 15, vertical: 20),
+                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(12),
                       color: Colorconstants.textColor),
