@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:quizz_application/Dummydb.dart';
 import 'package:quizz_application/utils/colorconstants.dart';
-import 'package:quizz_application/view/result_screen/result_screen.dart';
 
 class QuestionsScreen extends StatefulWidget {
   const QuestionsScreen({super.key});
@@ -11,7 +10,8 @@ class QuestionsScreen extends StatefulWidget {
 }
 
 class _QuestionsScreenState extends State<QuestionsScreen> {
-  int Questionindex = 0;
+  int Questionindex = 0; //index of questionlist for big container
+  int? selectedoption; //index of clicked option
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +22,7 @@ class _QuestionsScreenState extends State<QuestionsScreen> {
           backgroundColor: Colorconstants.Scaffoldbgcolor,
           actions: [
             Text(
-              "1/13",
+              "${Questionindex + 1}/${Dummydb.Questionslist.length}",
               style: TextStyle(color: Colorconstants.textColor),
             ),
             SizedBox(
@@ -57,32 +57,40 @@ class _QuestionsScreenState extends State<QuestionsScreen> {
               Column(
                 children: List.generate(
                   4,
-                  (Index) => Padding(
+                  (optionIndex) => Padding(
+                    //optionindex if for index of option list in dummy db
                     padding: const EdgeInsets.only(top: 20),
-                    child: Container(
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                      decoration: BoxDecoration(
-                          border: Border.all(
-                            color: Colorconstants.textColor,
-                          ),
-                          borderRadius: BorderRadius.circular(12)),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            Dummydb.Questionslist[Questionindex]["Options"]
-                                [Index],
-                            style: TextStyle(
-                                color: Colorconstants.textColor,
-                                fontWeight: FontWeight.w600,
-                                fontSize: 16),
-                          ),
-                          Icon(
-                            Icons.circle_outlined,
-                            color: Colorconstants.textColor,
-                          ),
-                        ],
+                    child: InkWell(
+                      onTap: () {
+                        if (selectedoption == null) {
+                          selectedoption = optionIndex;
+                          print(selectedoption);
+                          setState(() {});
+                        }
+                      },
+                      child: Container(
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                        decoration: BoxDecoration(
+                            border: Border.all(color: getcolor(optionIndex)),
+                            borderRadius: BorderRadius.circular(12)),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              Dummydb.Questionslist[Questionindex]["Options"]
+                                  [optionIndex],
+                              style: TextStyle(
+                                  color: Colorconstants.textColor,
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 16),
+                            ),
+                            Icon(
+                              Icons.circle_outlined,
+                              color: Colorconstants.textColor,
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
@@ -93,15 +101,10 @@ class _QuestionsScreenState extends State<QuestionsScreen> {
               ),
               InkWell(
                 onTap: () {
-                  Questionindex = Questionindex + 1;
-                  if (Questionindex > Dummydb.Questionslist.length - 1) {
-                    Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => ResultScreen(),
-                        ));
+                  if (Questionindex < Dummydb.Questionslist.length - 1) {
+                    Questionindex++;
+                    selectedoption = null;
                   }
-
                   setState(() {});
                 },
                 child: Container(
@@ -119,5 +122,23 @@ class _QuestionsScreenState extends State<QuestionsScreen> {
         ),
       ),
     );
+  }
+
+  Color getcolor(int currentoptionindex) {
+    //currrent option index optionindex
+    if (selectedoption != null &&
+        currentoptionindex ==
+            Dummydb.Questionslist[Questionindex]["answerindex"]) {
+      return Colorconstants.rightanserColor;
+    }
+    if (selectedoption == currentoptionindex) {
+      if (selectedoption ==
+          Dummydb.Questionslist[Questionindex]["answerindex"]) {
+        return Colorconstants.rightanserColor;
+      } else {
+        return Colorconstants.wronganswerColor;
+      }
+    } else
+      return Colorconstants.textColor;
   }
 }
