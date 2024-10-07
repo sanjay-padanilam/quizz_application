@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:quizz_application/Dummydb.dart';
+import 'package:quizz_application/utils/animation_constants.dart';
 import 'package:quizz_application/utils/colorconstants.dart';
 import 'package:quizz_application/view/result_screen/result_screen.dart';
 
@@ -42,18 +44,38 @@ class _QuestionsScreenState extends State<QuestionsScreen> {
                     color: Colorconstants.Questionsbgcolor,
                     borderRadius: BorderRadius.circular(15),
                   ),
-                  child: Center(
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 20),
-                      child: Text(
-                        Dummydb.Questionslist[Questionindex]["Question"],
-                        style: TextStyle(
-                            color: Colorconstants.textColor,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 18),
-                      ),
-                    ),
-                  ),
+                  child: selectedoption ==
+                          Dummydb.Questionslist[Questionindex]["answerindex"]
+                      ? Stack(
+                          children: [
+                            Lottie.asset(AnimationConstants.rightanimation),
+                            Center(
+                              child: Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 20),
+                                child: Text(
+                                  Dummydb.Questionslist[Questionindex]
+                                      ["Question"],
+                                  style: TextStyle(
+                                      color: Colorconstants.textColor,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 18),
+                                ),
+                              ),
+                            ),
+                          ],
+                        )
+                      : Center(
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 20),
+                            child: Text(
+                              Dummydb.Questionslist[Questionindex]["Question"],
+                              style: TextStyle(
+                                  color: Colorconstants.textColor,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 18),
+                            ),
+                          ),
+                        ),
                 ),
               ),
               Column(
