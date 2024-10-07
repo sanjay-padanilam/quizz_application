@@ -13,6 +13,7 @@ class QuestionsScreen extends StatefulWidget {
 class _QuestionsScreenState extends State<QuestionsScreen> {
   int Questionindex = 0; //index of questionlist for big container
   int? selectedoption; //index of clicked option
+  int rightanswercount = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -66,7 +67,13 @@ class _QuestionsScreenState extends State<QuestionsScreen> {
                         if (selectedoption == null) {
                           selectedoption = optionIndex;
                           print(selectedoption);
+
                           setState(() {});
+                          if (selectedoption ==
+                              Dummydb.Questionslist[Questionindex]
+                                  ["answerindex"]) {
+                            rightanswercount++;
+                          }
                         }
                       },
                       child: Container(
@@ -106,13 +113,14 @@ class _QuestionsScreenState extends State<QuestionsScreen> {
                       onTap: () {
                         if (Questionindex < Dummydb.Questionslist.length - 1) {
                           Questionindex++;
+
                           selectedoption = null;
                         } else {
                           Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(
-                                builder: (context) =>
-                                    ResultScreen(rightaswercount: 5),
+                                builder: (context) => ResultScreen(
+                                    rightaswercount: rightanswercount),
                               ));
                         }
                         setState(() {});

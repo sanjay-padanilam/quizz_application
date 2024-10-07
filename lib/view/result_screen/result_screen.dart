@@ -22,6 +22,7 @@ class _ResultScreenState extends State<ResultScreen> {
   calculatefn() {
     var percentage =
         widget.rightaswercount / Dummydb.Questionslist.length * 100;
+
     if (percentage >= 80) {
       starcount = 3;
     } else if (percentage <= 50) {
@@ -53,7 +54,7 @@ class _ResultScreenState extends State<ResultScreen> {
                     child: Icon(
                       Icons.star,
                       size: index == 1 ? 80 : 50,
-                      color: index <= starcount
+                      color: index < starcount && starcount != 0
                           ? Colorconstants.goldenyellowcolor
                           : Colors.grey,
                     ),
@@ -133,4 +134,15 @@ class _ResultScreenState extends State<ResultScreen> {
       ),
     );
   }
+
+  // Color getcolor(colorindex) {
+  //   if (starcount != 0 && starcount == 1) {
+  //     return colorindex[0] = Colorconstants.goldenyellowcolor;
+  //   } else if (starcount == 2) {
+  //     return colorindex[starcount - 1] = Colorconstants.goldenyellowcolor;
+  //   } else if (starcount == 3) {
+  //     return colorindex[starcount - 1] = Colorconstants.goldenyellowcolor;
+  //   } else
+  //     return Colors.grey;
+  // }
 }
