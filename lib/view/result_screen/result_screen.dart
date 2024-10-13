@@ -54,7 +54,7 @@ class _ResultScreenState extends State<ResultScreen> {
                     child: Icon(
                       Icons.star,
                       size: index == 1 ? 80 : 50,
-                      color: index < starcount && starcount != 0
+                      color: index < starcount
                           ? Colorconstants.goldenyellowcolor
                           : Colors.grey,
                     ),
@@ -134,15 +134,4 @@ class _ResultScreenState extends State<ResultScreen> {
       ),
     );
   }
-
-  // Color getcolor(colorindex) {
-  //   if (starcount != 0 && starcount == 1) {
-  //     return colorindex[0] = Colorconstants.goldenyellowcolor;
-  //   } else if (starcount == 2) {
-  //     return colorindex[starcount - 1] = Colorconstants.goldenyellowcolor;
-  //   } else if (starcount == 3) {
-  //     return colorindex[starcount - 1] = Colorconstants.goldenyellowcolor;
-  //   } else
-  //     return Colors.grey;
-  // }
 }
